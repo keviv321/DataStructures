@@ -6,14 +6,14 @@ import java.util.Scanner;
 import java.util.Stack;
 
 @SuppressWarnings("serial")
-public class Queue {
+public class QueueUsingTwoStacks {
 	//Stack <Integer> Q;
 
 
 
 	public static void main(String args[])
 	{
-		QueueUsingTwoStacks enqueue = new QueueUsingTwoStacks();
+		Queue enqueue = new Queue();
 		Scanner in=new Scanner(System.in);
 		int queries=in.nextInt();
 		int choice;Integer value;
@@ -39,7 +39,7 @@ public class Queue {
 	}
 }
 
-class QueueUsingTwoStacks extends Stack<Integer>{
+class Queue extends Stack<Integer>{
 
 	@Override
 	public  Integer peek() {
