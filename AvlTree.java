@@ -1,8 +1,9 @@
-package HackerRank;
+package DS;
 
 import java.util.Scanner;
 
-public class AvlTree {
+class AvlTree {
+	
 	Node root;
 	private static Scanner ob;
 
@@ -11,9 +12,8 @@ public class AvlTree {
 	}
 
 
-	private Node insert(Node m,int data) {
+	public Node insert(Node m,int data) {
 		// TODO Auto-generated method stub
-
 		if(m==null)
 		{
 			Node temp=new Node(data);
@@ -31,42 +31,14 @@ public class AvlTree {
 		else 
 			return m;
 
-		m.height=1+Math.max(height(m.left), height(m.right));
-		//System.out.println(m.height);
-		int balance=getBalance(m);
-
-		//LL Problem
-		if (balance>1 &&height(root.left.left) >= height(root.left.right))
-			return rotateRight(m);
-
-		//RR Problem
-		else if(balance<-1&&height(root.right.right) >= height(root.right.left))
-			return rotateLeft(m);
-
-		//LR Problem
-		else if(balance>1&&height(root.left.left) < height(root.left.right))
-		{
-			m = rotateRight(m);
-			return rotateLeft(m);
-			
-		}
-
-		//RL Problem
-		else if(balance<-1&&height(root.right.right) <height(root.right.left))
-		{
-			m = rotateLeft(m);
-			return rotateRight(m);
-		}
-		return m;
-
-
+		return rebalance(m);
 	}
 
-	private Node rotateLeft(Node m) {
+	public Node rotateLeft(Node m) {
+		// TODO Auto-generated method stub
 		Node y=m.right;
-		Node temp;//=null;
-		//if (y!=null)
-			temp=y.left;
+		Node temp;
+		temp=y.left;
 
 		//perform rotation
 		y.left=m;
@@ -78,16 +50,14 @@ public class AvlTree {
 		m.height=Math.max(height(m.left), height(m.right))+1;
 
 		return y;
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	private Node rotateRight(Node m) {
 		// TODO Auto-generated method stub
 		Node y=m.left;
-		Node temp;//=null;
-		//if (y!=null)
-			temp=y.right;
+		Node temp;
+		temp=y.right;
 
 		//perform Rotation
 		y.right=m;
@@ -99,14 +69,16 @@ public class AvlTree {
 
 		return y;
 	}
-
+	
+	//Method to calculate Balancing Factor 
 	private int getBalance(Node m) {
 		// TODO Auto-generated method stub
 		if (m==null)
 			return 0;
 		return height(m.left)-height(m.right);
 	}
-
+	
+	//Height of a node 
 	private int height(Node right) {
 		// TODO Auto-generated method stub
 		if (right==null)
@@ -115,44 +87,9 @@ public class AvlTree {
 		return (right.height);
 	}
 
-	public static void main(String args[])
-	{
-		AvlTree brnch = new AvlTree();
-		//brnch.root=null;
-		ob=new Scanner(System.in);
-		int choice,value;
-		while(true)
-		{
-			System.out.println("Enter your choice");
-			choice=ob.nextInt();
-			switch(choice)
-			{
-			case 1:
-				System.out.println("Enter the node value");
-				value=ob.nextInt();
-				brnch.root=brnch.insert(brnch.root,value);
-				break;
-			case 2:
-				brnch.printTree(brnch.root);
-				System.out.println();
-				break;
-			case 3:
-				System.out.println("Enter the value to be deleted");
-				value = ob.nextInt();
-				brnch.root = brnch.deleteNode(brnch.root , value);
-				break;
-			case 4:
-				System.exit(0);
-				break;
-			default:
-				System.out.println("Invalid Input");
-				break;
-			}
-		}
-		//in.close();
-	}
-
-	private Node deleteNode(Node root2, int value) {
+	
+	//Method to delete a Node from the AVL Tree
+	public Node deleteNode(Node root2, int value) {
 		// TODO Auto-generated method stub
 		
 		if (root2 == null)
@@ -173,19 +110,29 @@ public class AvlTree {
 				root2.left = deleteNode(root2.left , root2.data);
 			}
 		}
+		return rebalance(root2);
+	}
+	
+	/*
+	*Method to rebalance the tree
+	*/
+	private Node rebalance(Node root2)
+	{
+		//Updating height of every node
 		root2.height=1+Math.max(height(root2.left), height(root2.right));
-		//System.out.println(m.height);
-		int balance=getBalance(root2);
+	
+		//Calculating the balance factor
+		int balance = getBalance(root2);
 
-		//LL Problem
+		//Solution to LL Problem
 		if (balance>1 &&height(root.left.left) >= height(root.left.right))
 			return rotateRight(root2);
 
-		//RR Problem
+		//Solution to RR Problem
 		else if(balance<-1&&height(root.right.right) >= height(root.right.left))
 			return rotateLeft(root2);
 
-		//LR Problem
+		//Solution to LR Problem
 		else if(balance>1&&height(root.left.left) < height(root.left.right))
 		{
 			root2 = rotateRight(root2);
@@ -193,36 +140,36 @@ public class AvlTree {
 			
 		}
 
-		//RL Problem
+		//Solution to RL Problem
 		else if(balance<-1&&height(root.right.right) <height(root.right.left))
 		{
 			root2 = rotateLeft(root2);
 			return rotateRight(root2);
 		}
-		
 		return root2;
 	}
 	
+	
+	/*
+	*Finding Maximum value from the subtree
+	*/
 	private int findMax(Node right) {
 		// TODO Auto-generated method stub
 		if (right.right == null)
 			return right.data;
 		else
 			return findMax(right.right);
-		//return right.data;
 	}
 
-
-	private  void printTree(Node temp) //In-Order Traversal
+	
+	//In-Order Traversal of the AVL Tree
+	public  void toString(Node temp) 
 	{
 		// TODO Auto-generated method stub
 		if(temp==null)
 			return;
-		printTree(temp.left);
-		System.out.print(temp.data+" ");
-		printTree(temp.right);
+		toString (temp.left);
+		System.out.print (temp.data+" ");
+		toString (temp.right);
 	}
-	
-	
-
 }
