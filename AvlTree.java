@@ -34,7 +34,7 @@ class AvlTree {
 		return rebalance(m);
 	}
 
-	public Node rotateLeft(Node m) {
+	private Node rotateLeft(Node m) {
 		// TODO Auto-generated method stub
 		Node y=m.right;
 		Node temp;
