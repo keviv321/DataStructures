@@ -76,6 +76,20 @@ public class HeightAndTotalHeight_of_BST {
 		//System.out.println();
 		return sum;
 	}
+	
+	public Node search (int key)
+	{
+		return search (root , key);
+	}
+	
+	private Node search (Node root , int key)
+	{
+		if (root == null || root.data == key)
+			return root;
+		else if (root.data > key)
+			return search (root.left , key);
+		return search(root.right , key);
+	}
 
 	
 	
