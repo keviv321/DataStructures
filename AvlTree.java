@@ -113,6 +113,20 @@ class AvlTree {
 		return rebalance(root2);
 	}
 	
+	public Node search (int key)
+	{
+		return search (root , key);
+	}
+	
+	private Node search (Node root , int key)
+	{
+		if (root == null || root.data == key)
+			return root;
+		else if (root.data > key)
+			return search (root.left , key);
+		return search(root.right , key);
+	}
+	
 	/*
 	*Method to rebalance the tree
 	*/
