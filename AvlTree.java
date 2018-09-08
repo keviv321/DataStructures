@@ -41,13 +41,13 @@ class AvlTree {
 		temp=y.left;
 
 		//perform rotation
-		y.left=m;
 		m.right=temp;
+		y.left=m;
 		
 
 		//Update height
-		y.height=Math.max(height(y.left), height(y.right))+1;
 		m.height=Math.max(height(m.left), height(m.right))+1;
+		y.height=(Math.max(height(y.left), height(y.right)))+1;
 
 		return y;
 		
@@ -60,13 +60,13 @@ class AvlTree {
 		temp=y.right;
 
 		//perform Rotation
-		y.right=m;
 		m.left=temp;
+		y.right=m;
 
 		//Update height
-		y.height=Math.max(height(y.left), height(y.right))+1;
 		m.height=Math.max(height(m.left), height(m.right))+1;
-
+		y.height=Math.max(height(y.left), height(y.right))+1;
+		
 		return y;
 	}
 	
@@ -149,16 +149,16 @@ class AvlTree {
 		//Solution to LR Problem
 		else if(balance>1&&height(root.left.left) < height(root.left.right))
 		{
-			root2 = rotateRight(root2);
-			return rotateLeft(root2);
+			root2.left = rotateLeft(root2.left);
+			return rotateRight(root2);
 			
 		}
 
 		//Solution to RL Problem
 		else if(balance<-1&&height(root.right.right) <height(root.right.left))
 		{
-			root2 = rotateLeft(root2);
-			return rotateRight(root2);
+			root2.right = rotateRight(root2.right);
+			return rotateLeft(root2);
 		}
 		return root2;
 	}
