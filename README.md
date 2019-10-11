@@ -1,2 +1,2 @@
 # Data Structures
-Programs written on Java
+Programs written in Java
